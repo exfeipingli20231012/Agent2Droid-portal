@@ -32,7 +32,7 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Agent2Droid"
+        android:theme="@style/Theme.Droidrun"
         tools:targetApi="31">
 
 
