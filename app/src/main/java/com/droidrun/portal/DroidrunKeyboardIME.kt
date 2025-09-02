@@ -1,4 +1,4 @@
-package com.droidrun.portal
+package com.agent2droid.portal
 
 import android.inputmethodservice.InputMethodService
 import android.util.Base64
@@ -7,16 +7,16 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.ExtractedTextRequest
 
-class DroidrunKeyboardIME : InputMethodService() {
-    private val TAG = "DroidrunKeyboardIME"
+class Agent2DroidKeyboardIME : InputMethodService() {
+    private val TAG = "Agent2DroidKeyboardIME"
 
     companion object {
-        private var instance: DroidrunKeyboardIME? = null
+        private var instance: Agent2DroidKeyboardIME? = null
         
-        fun getInstance(): DroidrunKeyboardIME? = instance
+        fun getInstance(): Agent2DroidKeyboardIME? = instance
         
         /**
-         * Check if the DroidrunKeyboardIME is currently active and available
+         * Check if the Agent2DroidKeyboardIME is currently active and available
          */
         fun isAvailable(): Boolean = instance != null
     }
@@ -24,7 +24,7 @@ class DroidrunKeyboardIME : InputMethodService() {
     override fun onCreate() {
         super.onCreate()
         instance = this
-        Log.d(TAG, "DroidrunKeyboardIME: onCreate() called")
+        Log.d(TAG, "Agent2DroidKeyboardIME: onCreate() called")
     }
 
     fun inputText(text: String): Boolean {
@@ -154,7 +154,7 @@ class DroidrunKeyboardIME : InputMethodService() {
     }
 
     override fun onDestroy() {
-        Log.d(TAG, "DroidrunKeyboardIME: onDestroy() called")
+        Log.d(TAG, "Agent2DroidKeyboardIME: onDestroy() called")
         instance = null
         super.onDestroy()
     }

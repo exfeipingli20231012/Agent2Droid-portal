@@ -1,4 +1,4 @@
-package com.droidrun.portal
+package com.agent2droid.portal
 
 import android.content.ContentProvider
 import android.content.ContentValues
@@ -17,16 +17,16 @@ import org.json.JSONException
 import org.json.JSONObject
 import androidx.core.net.toUri
 import android.os.Bundle
-import com.droidrun.portal.model.ElementNode
-import com.droidrun.portal.model.PhoneState
+import com.agent2droid.portal.model.ElementNode
+import com.agent2droid.portal.model.PhoneState
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 
-class DroidrunContentProvider : ContentProvider() {
+class Agent2DroidContentProvider : ContentProvider() {
     companion object {
-        private const val TAG = "DroidrunContentProvider"
-        private const val AUTHORITY = "com.droidrun.portal"
+        private const val TAG = "Agent2DroidContentProvider"
+        private const val AUTHORITY = "com.agent2droid.portal"
         private const val A11Y_TREE = 1
         private const val PHONE_STATE = 2
         private const val PING = 3
@@ -47,7 +47,7 @@ class DroidrunContentProvider : ContentProvider() {
     }
 
     override fun onCreate(): Boolean {
-        Log.d(TAG, "DroidrunContentProvider created")
+        Log.d(TAG, "Agent2DroidContentProvider created")
         return true
     }
 
@@ -125,7 +125,7 @@ class DroidrunContentProvider : ContentProvider() {
             val offset = values.getAsInteger("offset") 
                 ?: return "content://$AUTHORITY/result?status=error&message=No offset provided".toUri()
 
-            val accessibilityService = DroidrunAccessibilityService.getInstance()
+            val accessibilityService = Agent2DroidAccessibilityService.getInstance()
                 ?: return "content://$AUTHORITY/result?status=error&message=Accessibility service not available".toUri()
 
             val success = accessibilityService.setOverlayOffset(offset)
@@ -143,7 +143,7 @@ class DroidrunContentProvider : ContentProvider() {
     }
 
     private fun getAccessibilityTree(): String {
-        val accessibilityService = DroidrunAccessibilityService.getInstance()
+        val accessibilityService = Agent2DroidAccessibilityService.getInstance()
             ?: return createErrorResponse("Accessibility service not available")
         return try {
 
@@ -177,7 +177,7 @@ class DroidrunContentProvider : ContentProvider() {
 
 
     private fun getPhoneState(): String {
-        val accessibilityService = DroidrunAccessibilityService.getInstance()
+        val accessibilityService = Agent2DroidAccessibilityService.getInstance()
             ?: return createErrorResponse("Accessibility service not available")
         return try {
             val phoneState = buildPhoneStateJson(accessibilityService.getPhoneState())
@@ -202,7 +202,7 @@ class DroidrunContentProvider : ContentProvider() {
         }
 
     private fun getCombinedState(): String {
-        val accessibilityService = DroidrunAccessibilityService.getInstance()
+        val accessibilityService = Agent2DroidAccessibilityService.getInstance()
             ?: return createErrorResponse("Accessibility service not available")
         
         return try {
@@ -228,7 +228,7 @@ class DroidrunContentProvider : ContentProvider() {
     }
 
     private fun performTextInput(values: ContentValues): String {
-        val accessibilityService = DroidrunAccessibilityService.getInstance()
+        val accessibilityService = Agent2DroidAccessibilityService.getInstance()
             ?: return "error: Accessibility service not available"
         // Get the hex-encoded text
         val hexText = values.getAsString("hex_text")
@@ -281,8 +281,8 @@ class DroidrunContentProvider : ContentProvider() {
         val base64Text = values.getAsString("base64_text") ?: return "error: no text provided"
         val append = values.getAsBoolean("append") ?: false
     
-        return if (DroidrunKeyboardIME.getInstance() != null) {
-            val ok = DroidrunKeyboardIME.getInstance()!!.inputB64Text(base64Text, append)
+        return if (Agent2DroidKeyboardIME.getInstance() != null) {
+            val ok = Agent2DroidKeyboardIME.getInstance()!!.inputB64Text(base64Text, append)
             if (ok) "success: input done (append=$append)" else "error: input failed"
         } else {
             "error: IME not active"
@@ -291,8 +291,8 @@ class DroidrunContentProvider : ContentProvider() {
     
 
     private fun performKeyboardClear(): String {
-        val keyboardIME = DroidrunKeyboardIME.getInstance()
-            ?: return "error: DroidrunKeyboardIME not active or available"
+        val keyboardIME = Agent2DroidKeyboardIME.getInstance()
+            ?: return "error: Agent2DroidKeyboardIME not active or available"
 
         if (!keyboardIME.hasInputConnection()) {
             return "error: No input connection available - keyboard may not be focused on an input field"
@@ -306,8 +306,8 @@ class DroidrunContentProvider : ContentProvider() {
     }
 
     private fun performKeyboardKey(values: ContentValues): String {
-        val keyboardIME = DroidrunKeyboardIME.getInstance()
-            ?: return "error: DroidrunKeyboardIME not active or available"
+        val keyboardIME = Agent2DroidKeyboardIME.getInstance()
+            ?: return "error: Agent2DroidKeyboardIME not active or available"
 
         if (!keyboardIME.hasInputConnection()) {
             return "error: No input connection available - keyboard may not be focused on an input field"

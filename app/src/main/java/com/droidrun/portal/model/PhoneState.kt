@@ -1,4 +1,4 @@
-package com.droidrun.portal.model
+package com.agent2droid.portal.model
 
 import android.view.accessibility.AccessibilityNodeInfo
 

@@ -1,4 +1,4 @@
-package com.droidrun.portal
+package com.agent2droid.portal
 
 import android.accessibilityservice.AccessibilityService
 import android.accessibilityservice.AccessibilityServiceInfo
@@ -9,8 +9,8 @@ import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import android.view.accessibility.AccessibilityWindowInfo
-import com.droidrun.portal.model.ElementNode
-import com.droidrun.portal.model.PhoneState
+import com.agent2droid.portal.model.ElementNode
+import com.agent2droid.portal.model.PhoneState
 import android.os.Handler
 import android.os.Looper
 import java.util.concurrent.atomic.AtomicBoolean
@@ -19,18 +19,18 @@ import android.util.Base64
 import java.io.ByteArrayOutputStream
 import java.util.concurrent.CompletableFuture
 
-class DroidrunAccessibilityService : AccessibilityService(), ConfigManager.ConfigChangeListener {
+class Agent2DroidAccessibilityService : AccessibilityService(), ConfigManager.ConfigChangeListener {
 
     companion object {
-        private const val TAG = "DroidrunA11yService"
-        private var instance: DroidrunAccessibilityService? = null
+        private const val TAG = "Agent2DroidA11yService"
+        private var instance: Agent2DroidAccessibilityService? = null
         private const val MIN_ELEMENT_SIZE = 5
 
         // Periodic update constants
         private const val REFRESH_INTERVAL_MS = 250L // Update every 250ms
         private const val MIN_FRAME_TIME_MS = 16L // Minimum time between frames (roughly 60 FPS)
 
-        fun getInstance(): DroidrunAccessibilityService? = instance
+        fun getInstance(): Agent2DroidAccessibilityService? = instance
     }
 
     private lateinit var overlayManager: OverlayManager

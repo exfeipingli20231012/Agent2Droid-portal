@@ -1,4 +1,4 @@
-package com.droidrun.portal
+package com.agent2droid.portal
 
 import android.util.Log
 import android.net.Uri
@@ -12,9 +12,9 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicBoolean
 
-class SocketServer(private val accessibilityService: DroidrunAccessibilityService) {
+class SocketServer(private val accessibilityService: Agent2DroidAccessibilityService) {
     companion object {
-        private const val TAG = "DroidrunSocketServer"
+        private const val TAG = "Agent2DroidSocketServer"
         private const val DEFAULT_PORT = 8080
         private const val THREAD_POOL_SIZE = 5
     }
@@ -437,7 +437,7 @@ class SocketServer(private val accessibilityService: DroidrunAccessibilityServic
         }
     }
 
-    private fun buildElementNodeJson(element: com.droidrun.portal.model.ElementNode): JSONObject {
+    private fun buildElementNodeJson(element: com.agent2droid.portal.model.ElementNode): JSONObject {
         return JSONObject().apply {
             put("index", element.overlayIndex)
             put("resourceId", element.nodeInfo.viewIdResourceName ?: "")
@@ -454,7 +454,7 @@ class SocketServer(private val accessibilityService: DroidrunAccessibilityServic
         }
     }
 
-    private fun buildPhoneStateJson(phoneState: com.droidrun.portal.model.PhoneState) =
+    private fun buildPhoneStateJson(phoneState: com.agent2droid.portal.model.PhoneState) =
         JSONObject().apply {
             put("currentApp", phoneState.appName)
             put("packageName", phoneState.packageName)
@@ -467,8 +467,8 @@ class SocketServer(private val accessibilityService: DroidrunAccessibilityServic
         }
 
     private fun performKeyboardInputBase64(values: ContentValues): String {
-        val keyboardIME = DroidrunKeyboardIME.getInstance()
-            ?: return "error: DroidrunKeyboardIME not active or available"
+        val keyboardIME = Agent2DroidKeyboardIME.getInstance()
+            ?: return "error: Agent2DroidKeyboardIME not active or available"
 
         if (!keyboardIME.hasInputConnection()) {
             return "error: No input connection available - keyboard may not be focused on an input field"
@@ -491,8 +491,8 @@ class SocketServer(private val accessibilityService: DroidrunAccessibilityServic
     }
 
     private fun performKeyboardClear(): String {
-        val keyboardIME = DroidrunKeyboardIME.getInstance()
-            ?: return "error: DroidrunKeyboardIME not active or available"
+        val keyboardIME = Agent2DroidKeyboardIME.getInstance()
+            ?: return "error: Agent2DroidKeyboardIME not active or available"
 
         if (!keyboardIME.hasInputConnection()) {
             return "error: No input connection available - keyboard may not be focused on an input field"
@@ -506,8 +506,8 @@ class SocketServer(private val accessibilityService: DroidrunAccessibilityServic
     }
 
     private fun performKeyboardKey(values: ContentValues): String {
-        val keyboardIME = DroidrunKeyboardIME.getInstance()
-            ?: return "error: DroidrunKeyboardIME not active or available"
+        val keyboardIME = Agent2DroidKeyboardIME.getInstance()
+            ?: return "error: Agent2DroidKeyboardIME not active or available"
 
         if (!keyboardIME.hasInputConnection()) {
             return "error: No input connection available - keyboard may not be focused on an input field"

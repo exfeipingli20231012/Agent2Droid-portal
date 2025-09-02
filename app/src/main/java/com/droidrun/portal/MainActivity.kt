@@ -1,4 +1,4 @@
-package com.droidrun.portal
+package com.agent2droid.portal
 
 import android.content.Context
 import android.content.Intent
@@ -119,7 +119,7 @@ class MainActivity : AppCompatActivity() {
     }
     
     private fun syncUIWithAccessibilityService() {
-        val accessibilityService = DroidrunAccessibilityService.getInstance()
+        val accessibilityService = Agent2DroidAccessibilityService.getInstance()
         if (accessibilityService != null) {
             // Sync overlay toggle
             toggleOverlay.isChecked = accessibilityService.isOverlayVisible()
@@ -244,7 +244,7 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Please enter a valid number", Toast.LENGTH_SHORT).show()
             }
         } catch (e: Exception) {
-            Log.e("DROIDRUN_MAIN", "Error applying input offset: ${e.message}")
+            Log.e("Agent2Droid_MAIN", "Error applying input offset: ${e.message}")
             Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
@@ -271,23 +271,23 @@ class MainActivity : AppCompatActivity() {
     
     private fun updateOverlayOffset(offsetValue: Int) {
         try {
-            val accessibilityService = DroidrunAccessibilityService.getInstance()
+            val accessibilityService = Agent2DroidAccessibilityService.getInstance()
             if (accessibilityService != null) {
                 val success = accessibilityService.setOverlayOffset(offsetValue)
                 if (success) {
                     statusText.text = "Element offset updated to: $offsetValue"
-                    Log.d("DROIDRUN_MAIN", "Offset updated successfully: $offsetValue")
+                    Log.d("AGENT2DROID_MAIN", "Offset updated successfully: $offsetValue")
                 } else {
                     statusText.text = "Failed to update offset"
-                    Log.e("DROIDRUN_MAIN", "Failed to update offset: $offsetValue")
+                    Log.e("AGENT2DROID_MAIN", "Failed to update offset: $offsetValue")
                 }
             } else {
                 statusText.text = "Accessibility service not available"
-                Log.e("DROIDRUN_MAIN", "Accessibility service not available for offset update")
+                Log.e("AGENT2DROID_MAIN", "Accessibility service not available for offset update")
             }
         } catch (e: Exception) {
             statusText.text = "Error updating offset: ${e.message}"
-            Log.e("DROIDRUN_MAIN", "Error updating offset: ${e.message}")
+            Log.e("AGENT2DROID_MAIN", "Error updating offset: ${e.message}")
         }
     }
     
@@ -296,7 +296,7 @@ class MainActivity : AppCompatActivity() {
             statusText.text = "Fetching combined state data..."
             
             // Use ContentProvider to get combined state (a11y tree + phone state)
-            val uri = Uri.parse("content://com.droidrun.portal/state")
+            val uri = Uri.parse("content://com.agent2droid.portal/state")
             
             val cursor = contentResolver.query(
                 uri,
@@ -317,7 +317,7 @@ class MainActivity : AppCompatActivity() {
                         statusText.text = "Combined state data received: ${data.length} characters"
                         Toast.makeText(this, "Combined state received successfully!", Toast.LENGTH_SHORT).show()
                         
-                        Log.d("DROIDRUN_MAIN", "Combined state data received: ${data.substring(0, Math.min(100, data.length))}...")
+                        Log.d("AGENT2DROID_MAIN", "Combined state data received: ${data.substring(0, Math.min(100, data.length))}...")
                     } else {
                         val error = jsonResponse.getString("error")
                         statusText.text = "Error: $error"
@@ -328,29 +328,29 @@ class MainActivity : AppCompatActivity() {
             
         } catch (e: Exception) {
             statusText.text = "Error fetching data: ${e.message}"
-            Log.e("DROIDRUN_MAIN", "Error fetching combined state data: ${e.message}")
+            Log.e("AGENT2DROID_MAIN", "Error fetching combined state data: ${e.message}")
         }
     }
     
     private fun toggleOverlayVisibility(visible: Boolean) {
         try {
-            val accessibilityService = DroidrunAccessibilityService.getInstance()
+            val accessibilityService = Agent2DroidAccessibilityService.getInstance()
             if (accessibilityService != null) {
                 val success = accessibilityService.setOverlayVisible(visible)
                 if (success) {
                     statusText.text = "Visualization overlays ${if (visible) "enabled" else "disabled"}"
-                    Log.d("DROIDRUN_MAIN", "Overlay visibility toggled to: $visible")
+                    Log.d("AGENT2DROID_MAIN", "Overlay visibility toggled to: $visible")
                 } else {
                     statusText.text = "Failed to toggle overlay"
-                    Log.e("DROIDRUN_MAIN", "Failed to toggle overlay visibility")
+                    Log.e("AGENT2DROID_MAIN", "Failed to toggle overlay visibility")
                 }
             } else {
                 statusText.text = "Accessibility service not available"
-                Log.e("DROIDRUN_MAIN", "Accessibility service not available for overlay toggle")
+                Log.e("AGENT2DROID_MAIN", "Accessibility service not available for overlay toggle")
             }
         } catch (e: Exception) {
             statusText.text = "Error changing visibility: ${e.message}"
-            Log.e("DROIDRUN_MAIN", "Error toggling overlay: ${e.message}")
+            Log.e("AGENT2DROID_MAIN", "Error toggling overlay: ${e.message}")
         }
     }
     
@@ -360,7 +360,7 @@ class MainActivity : AppCompatActivity() {
             statusText.text = "Fetching phone state..."
             
             // Use ContentProvider to get phone state
-            val uri = Uri.parse("content://com.droidrun.portal/")
+            val uri = Uri.parse("content://com.agent2droid.portal/")
             val command = JSONObject().apply {
                 put("action", "phone_state")
             }
@@ -384,7 +384,7 @@ class MainActivity : AppCompatActivity() {
                         statusText.text = "Phone state received: ${data.length} characters"
                         Toast.makeText(this, "Phone state received successfully!", Toast.LENGTH_SHORT).show()
                         
-                        Log.d("DROIDRUN_MAIN", "Phone state received: ${data.substring(0, Math.min(100, data.length))}...")
+                        Log.d("AGENT2DROID_MAIN", "Phone state received: ${data.substring(0, Math.min(100, data.length))}...")
                     } else {
                         val error = jsonResponse.getString("error")
                         statusText.text = "Error: $error"
@@ -395,13 +395,13 @@ class MainActivity : AppCompatActivity() {
             
         } catch (e: Exception) {
             statusText.text = "Error fetching phone state: ${e.message}"
-            Log.e("DROIDRUN_MAIN", "Error fetching phone state: ${e.message}")
+            Log.e("AGENT2DROID_MAIN", "Error fetching phone state: ${e.message}")
         }
     }
     
     // Check if the accessibility service is enabled
     private fun isAccessibilityServiceEnabled(): Boolean {
-        val accessibilityServiceName = packageName + "/" + DroidrunAccessibilityService::class.java.canonicalName
+        val accessibilityServiceName = packageName + "/" + Agent2DroidAccessibilityService::class.java.canonicalName
         
         try {
             val enabledServices = Settings.Secure.getString(
@@ -411,7 +411,7 @@ class MainActivity : AppCompatActivity() {
             
             return enabledServices?.contains(accessibilityServiceName) == true
         } catch (e: Exception) {
-            Log.e("DROIDRUN_MAIN", "Error checking accessibility status: ${e.message}")
+            Log.e("AGENT2DROID_MAIN", "Error checking accessibility status: ${e.message}")
             return false
         }
     }
@@ -423,11 +423,11 @@ class MainActivity : AppCompatActivity() {
         if (isEnabled) {
             accessibilityIndicator.setBackgroundResource(R.drawable.circle_indicator_green)
             accessibilityStatusText.text = "ENABLED"
-            accessibilityStatusCard.setCardBackgroundColor(resources.getColor(R.color.droidrun_secondary, null))
+            accessibilityStatusCard.setCardBackgroundColor(resources.getColor(R.color.agent2droid_secondary, null))
         } else {
             accessibilityIndicator.setBackgroundResource(R.drawable.circle_indicator_red)
             accessibilityStatusText.text = "DISABLED"
-            accessibilityStatusCard.setCardBackgroundColor(resources.getColor(R.color.droidrun_secondary, null))
+            accessibilityStatusCard.setCardBackgroundColor(resources.getColor(R.color.agent2droid_secondary, null))
         }
     }
     
@@ -438,11 +438,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
             Toast.makeText(
                 this,
-                "Please enable Droidrun Portal in Accessibility Services",
+                "Please enable Agent2Droid Portal in Accessibility Services",
                 Toast.LENGTH_LONG
             ).show()
         } catch (e: Exception) {
-            Log.e("DROIDRUN_MAIN", "Error opening accessibility settings: ${e.message}")
+            Log.e("AGENT2DROID_MAIN", "Error opening accessibility settings: ${e.message}")
             Toast.makeText(
                 this,
                 "Error opening accessibility settings",
@@ -502,16 +502,16 @@ class MainActivity : AppCompatActivity() {
             statusText.text = "Socket server port updated to: $port"
             updateAdbForwardCommand()
             
-            Log.d("DROIDRUN_MAIN", "Socket server port updated: $port")
+            Log.d("AGENT2DROID_MAIN", "Socket server port updated: $port")
         } catch (e: Exception) {
             statusText.text = "Error updating socket server port: ${e.message}"
-            Log.e("DROIDRUN_MAIN", "Error updating socket server port: ${e.message}")
+            Log.e("AGENT2DROID_MAIN", "Error updating socket server port: ${e.message}")
         }
     }
     
     private fun updateSocketServerStatus() {
         try {
-            val accessibilityService = DroidrunAccessibilityService.getInstance()
+            val accessibilityService = Agent2DroidAccessibilityService.getInstance()
             if (accessibilityService != null) {
                 val status = accessibilityService.getSocketServerStatus()
                 socketServerStatus.text = status
@@ -519,14 +519,14 @@ class MainActivity : AppCompatActivity() {
                 socketServerStatus.text = "Service not available"
             }
         } catch (e: Exception) {
-            Log.e("DROIDRUN_MAIN", "Error updating socket server status: ${e.message}")
+            Log.e("AGENT2DROID_MAIN", "Error updating socket server status: ${e.message}")
             socketServerStatus.text = "Error"
         }
     }
     
     private fun updateAdbForwardCommand() {
         try {
-            val accessibilityService = DroidrunAccessibilityService.getInstance()
+            val accessibilityService = Agent2DroidAccessibilityService.getInstance()
             if (accessibilityService != null) {
                 val command = accessibilityService.getAdbForwardCommand()
                 adbForwardCommand.text = command
@@ -536,7 +536,7 @@ class MainActivity : AppCompatActivity() {
                 adbForwardCommand.text = "adb forward tcp:$port tcp:$port"
             }
         } catch (e: Exception) {
-            Log.e("DROIDRUN_MAIN", "Error updating ADB forward command: ${e.message}")
+            Log.e("AGENT2DROID_MAIN", "Error updating ADB forward command: ${e.message}")
             adbForwardCommand.text = "Error"
         }
     }
@@ -547,7 +547,7 @@ class MainActivity : AppCompatActivity() {
             val version = packageInfo.versionName
             versionText.text = "Version: $version"
         } catch (e: Exception) {
-            Log.e("DROIDRUN_MAIN", "Error getting app version: ${e.message}")
+            Log.e("AGENT2DROID_MAIN", "Error getting app version: ${e.message}")
             versionText.text = "Version: N/A"
         }
     }

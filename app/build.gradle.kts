@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.droidrun.portal"
+    namespace = "com.agent2droid.portal"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.droidrun.portal"
+        applicationId = "com.agent2droid.portal"
         minSdk = 30
         targetSdk = 34
         versionCode = 35

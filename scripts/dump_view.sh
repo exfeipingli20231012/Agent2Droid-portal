@@ -29,7 +29,7 @@ while getopts "am:" opt; do
   esac
 done
 
-echo "📱 Droidrun Portal - Running in $MODE mode. Output will be saved to $OUTPUT_FILE"
+echo "📱 AGENT2DROID Portal - Running in $MODE mode. Output will be saved to $OUTPUT_FILE"
 
 # Clear logcat first
 adb logcat -c
@@ -40,10 +40,10 @@ adb logcat -G 16M
 # Send broadcast to request elements
 if [ "$MODE" = "all" ]; then
   echo "🔍 Requesting ALL elements..."
-  adb shell am broadcast -a com.droidrun.portal.GET_ALL_ELEMENTS
+  adb shell am broadcast -a com.agent2droid.portal.GET_ALL_ELEMENTS
 else
   echo "🔍 Requesting clickable elements..."
-  adb shell am broadcast -a com.droidrun.portal.GET_ELEMENTS
+  adb shell am broadcast -a com.agent2droid.portal.GET_ELEMENTS
 fi
 
 # Wait for data collection
@@ -51,9 +51,9 @@ echo "⏳ Waiting for response..."
 sleep 3
 
 # Retrieve logs based on mode
-LOG_TAG="DROIDRUN_ADB_DATA"
+LOG_TAG="AGENT2DROID_ADB_DATA"
 if [ "$MODE" = "all" ]; then
-  LOG_TAG="DROIDRUN_ADB_ALL_DATA"
+  LOG_TAG="AGENT2DROID_ADB_ALL_DATA"
 fi
 
 # Process chunks and reconstruct the JSON
@@ -64,7 +64,7 @@ CHUNKS=$(adb logcat -d | grep "$LOG_TAG" | grep "CHUNK|")
 if [ -z "$CHUNKS" ]; then
   echo "❌ No element data found in logs. Make sure the service is running correctly."
   # Try to find any relevant error messages
-  adb logcat -d | grep -E "DROIDRUN_ADB_RESPONSE|DROIDRUN_RECEIVER|DROIDRUN_ERROR" | tail -5
+  adb logcat -d | grep -E "AGENT2DROID_ADB_RESPONSE|AGENT2DROID_RECEIVER|AGENT2DROID_ERROR" | tail -5
   rm temp.json
   exit 1
 fi
@@ -85,7 +85,7 @@ echo ""
 if [ ! -s temp.json ]; then
   echo "❌ Failed to reconstruct JSON data. The temporary file is empty."
   # Check if there's any data from the file approach
-  JSON_PATH=$(adb shell logcat -d | grep "DROIDRUN_FILE" | grep "JSON data written to" | tail -1 | sed 's/.*JSON data written to: \(.*\)/\1/')
+  JSON_PATH=$(adb shell logcat -d | grep "AGENT2DROID_FILE" | grep "JSON data written to" | tail -1 | sed 's/.*JSON data written to: \(.*\)/\1/')
   
   if [ -n "$JSON_PATH" ]; then
     echo "⚠️ Trying alternative method - pulling JSON file directly..."

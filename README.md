@@ -10,7 +10,7 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/droid_run?style=social)](https://x.com/droid_run)
 
 ## 👁️ Overview
-Droidrun Portal is an Android accessibility service that provides real-time visual feedback and data collection for UI elements on the screen. It creates an interactive overlay that highlights clickable, checkable, editable, scrollable, and focusable elements, making it an invaluable tool for UI testing, automation development, and accessibility assessment.
+Agent2Droid Portal is an Android accessibility service that provides real-time visual feedback and data collection for UI elements on the screen. It creates an interactive overlay that highlights clickable, checkable, editable, scrollable, and focusable elements, making it an invaluable tool for UI testing, automation development, and accessibility assessment.
 
 ## ✨ Features
 
@@ -23,31 +23,31 @@ Droidrun Portal is an Android accessibility service that provides real-time visu
 
 ### ⚙️ Setup
 1. Install the app on your Android device
-2. Enable the accessibility service in Android Settings → Accessibility → Droidrun Portal
+2. Enable the accessibility service in Android Settings → Accessibility → Agent2Droid Portal
 3. Grant overlay permission when prompted
 
 ### 💻 ADB Commands
 ```bash
 # Get accessibility tree as JSON
-adb shell content query --uri content://com.droidrun.portal/a11y_tree
+adb shell content query --uri content://com.agent2droid.portal/a11y_tree
 
 # Get phone state as JSON
-adb shell content query --uri content://com.droidrun.portal/phone_state
+adb shell content query --uri content://com.agent2droid.portal/phone_state
 
 # Get combined state (accessibility tree + phone state) as JSON
-adb shell content query --uri content://com.droidrun.portal/state
+adb shell content query --uri content://com.agent2droid.portal/state
 
 # Test connection (ping)
-adb shell content query --uri content://com.droidrun.portal/ping
+adb shell content query --uri content://com.agent2droid.portal/ping
 
 # Keyboard text input (base64 encoded)
-adb shell content insert --uri content://com.droidrun.portal/keyboard/input --bind base64_text:s:"SGVsbG8gV29ybGQ="
+adb shell content insert --uri content://com.agent2droid.portal/keyboard/input --bind base64_text:s:"SGVsbG8gV29ybGQ="
 
 # Clear text via keyboard
-adb shell content insert --uri content://com.droidrun.portal/keyboard/clear
+adb shell content insert --uri content://com.agent2droid.portal/keyboard/clear
 
 # Send key event via keyboard (e.g., Enter key = 66)
-adb shell content insert --uri content://com.droidrun.portal/keyboard/key --bind key_code:i:66
+adb shell content insert --uri content://com.agent2droid.portal/keyboard/key --bind key_code:i:66
 ```
 
 ### 📤 Data Output

@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Droidrun"
+rootProject.name = "Agent2Droid"
 include(":app")
  

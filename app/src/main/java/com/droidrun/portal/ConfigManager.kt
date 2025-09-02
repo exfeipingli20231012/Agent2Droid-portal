@@ -1,16 +1,16 @@
-package com.droidrun.portal
+package com.agent2droid.portal
 
 import android.content.Context
 import android.content.SharedPreferences
 
 /**
- * Centralized configuration manager for Droidrun Portal
+ * Centralized configuration manager for Agent2Droid Portal
  * Handles SharedPreferences operations and provides a clean API for configuration management
  */
 class ConfigManager private constructor(private val context: Context) {
     
     companion object {
-        private const val PREFS_NAME = "droidrun_config"
+        private const val PREFS_NAME = "agent2droid_config"
         private const val KEY_OVERLAY_VISIBLE = "overlay_visible"
         private const val KEY_OVERLAY_OFFSET = "overlay_offset"
         private const val KEY_SOCKET_SERVER_ENABLED = "socket_server_enabled"
