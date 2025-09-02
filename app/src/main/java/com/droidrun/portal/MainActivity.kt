@@ -423,11 +423,11 @@ class MainActivity : AppCompatActivity() {
         if (isEnabled) {
             accessibilityIndicator.setBackgroundResource(R.drawable.circle_indicator_green)
             accessibilityStatusText.text = "ENABLED"
-            accessibilityStatusCard.setCardBackgroundColor(resources.getColor(R.color.agent2droid_secondary, null))
+            accessibilityStatusCard.setCardBackgroundColor(resources.getColor(R.color.droidrun_secondary, null))
         } else {
             accessibilityIndicator.setBackgroundResource(R.drawable.circle_indicator_red)
             accessibilityStatusText.text = "DISABLED"
-            accessibilityStatusCard.setCardBackgroundColor(resources.getColor(R.color.agent2droid_secondary, null))
+            accessibilityStatusCard.setCardBackgroundColor(resources.getColor(R.color.droidrun_secondary, null))
         }
     }
     
